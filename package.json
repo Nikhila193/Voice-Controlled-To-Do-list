@@ -1,0 +1,25 @@
+{
+  "name": "voice-todo-list",
+  "version": "1.0.0",
+  "description": "A voice-controlled to-do list application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "voice",
+    "todo",
+    "speech",
+    "recognition",
+    "web-speech-api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "date-fns": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

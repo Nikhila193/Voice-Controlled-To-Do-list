@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/2.30.0/date-fns.min.js"></script>
+    <!-- Google Calendar API -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+</head>
+<body>
+    <!-- Skip link for keyboard users -->
+    <a href="#taskList" class="skip-link">Skip to Task List</a>
+
+    <div class="container">
+        <header>
+            <h1>Voice To-Do List</h1>
+            <p class="subtitle">Manage your tasks using voice commands</p>
+        </header>
+        
+        <div class="mic-help-banner" id="micHelpBanner" role="alert" aria-live="polite">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            <div>
+                <p><strong>Microphone Tips:</strong></p>
+                <ul>
+                    <li>Make sure your microphone is connected and working</li>
+                    <li>Allow microphone access when prompted by the browser</li>
+                    <li>Speak clearly and at a normal volume</li>
+                    <li>Try in a quiet environment for better recognition</li>
+                </ul>
+                <button id="dismissHelpBtn" class="dismiss-btn" aria-label="Dismiss microphone tips">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="voice-controls">
+            <button id="startBtn" class="btn start-btn" aria-label="Start voice recognition">
+                <i class="fas fa-microphone" aria-hidden="true"></i> Start Listening
+            </button>
+            <div id="statusMsg" class="status-msg" aria-live="polite" role="status">
+                <span class="status-indicator" id="statusIndicator">
+                    <i class="fas fa-microphone" aria-hidden="true"></i>
+                    <span>Ready for command</span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="commands-help">
+            <h3>Voice Commands</h3>
+            <ul>
+                <li><strong>"Add task: [task name]"</strong> - Add a new task</li>
+                <li><strong>"Add task to [category] list: [task name]"</strong> - Add a task to a specific category</li>
+                <li><strong>"Add task: [task name] by [date]"</strong> - Add a task with a due date</li>
+                <li><strong>"Complete task: [task name]"</strong> - Mark a task as complete</li>
+                <li><strong>"List tasks"</strong> - Hear your current tasks</li>
+                <li><strong>"Start Pomodoro for [task name]"</strong> - Start a 25-minute timer</li>
+                <li><strong>"Clear all tasks"</strong> - Delete all tasks from your list</li>
+            </ul>
+            <p class="date-format-help">Date formats: "tomorrow", "next week", "next month", or specific dates like "December 25th"</p>
+        </div>
+        
+        <div class="task-container">
+            <div class="task-header">
+                <h2>Your Tasks <span class="task-count" id="taskCount" aria-live="polite">0 tasks</span></h2>
+                <button id="clearAllBtn" class="btn clear-btn" title="Clear All Tasks" aria-label="Clear all tasks">
+                    <i class="fas fa-trash-alt" aria-hidden="true"></i> Clear All
+                </button>
+            </div>
+            <ul id="taskList" class="task-list" role="list" aria-label="Task list"></ul>
+        </div>
+        
+        <div class="pomodoro-container" id="pomodoroContainer" aria-live="polite">
+            <h3>Pomodoro Timer</h3>
+            <div class="timer" id="timer" aria-label="Timer">25:00</div>
+            <div class="timer-task" id="timerTask" aria-live="polite"></div>
+            <button id="stopTimerBtn" class="btn stop-btn" aria-label="Stop Pomodoro timer">
+                <i class="fas fa-stop" aria-hidden="true"></i> Stop Timer
+            </button>
+        </div>
+    </div>
+    
+    <!-- Confirmation modal for clearing all tasks -->
+    <div id="confirmModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modalTitle">Clear All Tasks</h3>
+            <p class="modal-text">Are you sure you want to delete all tasks? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button id="cancelClearBtn" class="btn modal-btn-cancel" aria-label="Cancel clearing tasks">Cancel</button>
+                <button id="confirmClearBtn" class="btn modal-btn-confirm" aria-label="Confirm clearing all tasks">Clear All</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="feedbackMessage" class="feedback-message" role="alert" aria-live="assertive"></div>
+    
+    <script src="app.js"></script>
+</body>
+</html> 
